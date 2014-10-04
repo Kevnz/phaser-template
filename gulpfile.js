@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload');
 
 var source = require('vinyl-source-stream');
- 
+var deploy = require('gulp-gh-pages'); 
  
  
 gulp.task('browserify-dev', function () {
@@ -26,7 +26,7 @@ gulp.task('browserify-dev', function () {
 
 gulp.task('browserify-prod', function () {
  
-    return browserify({ debug: true,entries:['./public/js/game.js']
+    return browserify({ debug: true,entries:['./src/game.js']
         })
         .transform('es6ify')
         .transform('stripify')
@@ -43,6 +43,14 @@ gulp.task('browserify-prod', function () {
         });
 });
 
+gulp.task('prep', ['browserify-prod'], function () {
+    return gulp.src('./public/**/*.*')
+        .pipe(gulp.dest('./dist'));
+});
+gulp.task('deploy', function () {
+    return gulp.src('./dist/**/*')
+        .pipe(deploy());
+});
 
 gulp.task('build' , ['browserify-dev','browserify-prod']);
 gulp.task('dev' , ['browserify-dev'])

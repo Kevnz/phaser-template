@@ -27,6 +27,7 @@
     "browserify-shim": "^3.7.0",
     "es6ify": "^1.4.0",
     "gulp": "^3.8.8",
+    "gulp-gh-pages": "^0.3.4",
     "gulp-jshint": "^1.8.5",
     "gulp-livereload": "^2.1.1",
     "phaser": "^2.1.1",
