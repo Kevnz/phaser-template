@@ -5,8 +5,9 @@ var gulp = require('gulp'),
 
 var source = require('vinyl-source-stream');
 var deploy = require('gulp-gh-pages'); 
- 
- 
+var replace = require('gulp-replace'); 
+var del = require('delete');
+
 gulp.task('browserify-dev', function () {
  
     return browserify({ entries:['./src/game.js'],debug: true })
@@ -36,15 +37,20 @@ gulp.task('browserify-prod', function () {
             console.log('browserify error');
             console.log(arguments);
         })
-        .pipe(source('game-min.js'))
+        .pipe(source('game.min.js'))
         .pipe(gulp.dest('./public/js')) 
         .on('end', function () {
             console.log('ended');
         });
 });
-
+gulp.task('purge', function (callback) {
+    del.sync('./dist')
+    callback(null);
+ 
+});
 gulp.task('prep', ['browserify-prod'], function () {
     return gulp.src('./public/**/*.*')
+         .pipe(replace(/game.js/g, 'game.min.js'))
         .pipe(gulp.dest('./dist'));
 });
 gulp.task('deploy', function () {
@@ -53,7 +59,9 @@ gulp.task('deploy', function () {
 });
 
 gulp.task('build' , ['browserify-dev','browserify-prod']);
-gulp.task('dev' , ['browserify-dev'])
+gulp.task('dev' , ['browserify-dev']);
+gulp.task('publish', ['purge', 'prep', 'deploy']);
+
 gulp.task('default' , ['build']);
 gulp.task('watch', function() {
     livereload.listen();
