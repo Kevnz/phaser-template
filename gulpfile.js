@@ -48,10 +48,14 @@ gulp.task('purge', function (callback) {
     callback(null);
  
 });
-gulp.task('prep', ['browserify-prod'], function () {
+gulp.task('move', ['browserify-prod'], function () {
     return gulp.src('./public/**/*.*')
-        .pipe(replace(/game.js/g, 'game.min.js'))
         .pipe(gulp.dest('./dist'));
+});
+gulp.task('prep', ['move'], function () {
+    return gulp.src('./dist/index.html')
+        .pipe(replace(/game.js/g, 'game.min.js'))
+        .pipe(gulp.dest('./dist'))
 });
 gulp.task('deploy', function () {
     return gulp.src('./dist/**/*')
