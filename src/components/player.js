@@ -1,7 +1,9 @@
 module.exports = function (game, options) {
 	var player, cursors;
     var playerSpeed = 200; //dunno
-
+    var doSomething = function() {
+    	console.log('pew pew');
+    }
 	return {
 		init : function () {
 			player = game.add.sprite((400 - 16), 500, 'player');
@@ -22,7 +24,7 @@ module.exports = function (game, options) {
 	            }
 	            else
 	            {
-	                if(player.y > 350) player.y -= 4;
+	                //if(player.y > 350) player.y -= 4;
 	            }
 	        }
 	        else if (cursors.down.isDown)
@@ -46,7 +48,7 @@ module.exports = function (game, options) {
 	        }
 	        if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
 	        {
-	            fireBullet() ;
+	            doSomething() ;
 	        }
 
 
