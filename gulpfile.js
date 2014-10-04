@@ -50,7 +50,7 @@ gulp.task('purge', function (callback) {
 });
 gulp.task('prep', ['browserify-prod'], function () {
     return gulp.src('./public/**/*.*')
-         .pipe(replace(/game.js/g, 'game.min.js'))
+        .pipe(replace(/game.js/g, 'game.min.js'))
         .pipe(gulp.dest('./dist'));
 });
 gulp.task('deploy', function () {
@@ -60,7 +60,11 @@ gulp.task('deploy', function () {
 
 gulp.task('build' , ['browserify-dev','browserify-prod']);
 gulp.task('dev' , ['browserify-dev']);
-gulp.task('publish', ['purge', 'prep', 'deploy']);
+
+gulp.task('publish', ['purge', 'prep'], function () { 
+
+    return gulp.src('./dist/**/*')
+        .pipe(deploy());});
 
 gulp.task('default' , ['build']);
 gulp.task('watch', function() {
