@@ -44,10 +44,12 @@ gulp.task('browserify-prod', function () {
 });
 
 
-gulp.task('build' , ['browserify-dev','browserify-prod'])
+gulp.task('build' , ['browserify-dev','browserify-prod']);
+gulp.task('dev' , ['browserify-dev'])
+gulp.task('default' , ['build']);
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch(['./public/js/game.js','./public/js/game/*.js', './public/js/game/**/*.js'], ['browserify-dev','browserify-prod'])
+    gulp.watch(['./src/**/*.js','./src/*.js'], ['browserify-dev'])
         .on('change', livereload.changed);
     //gulp.watch(paths.images, ['images']);
 });
