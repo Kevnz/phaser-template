@@ -24,7 +24,7 @@ module.exports = function (game, options) {
 	            }
 	            else
 	            {
-	                //if(player.y > 350) player.y -= 4;
+	                player.y -= 4;
 	            }
 	        }
 	        else if (cursors.down.isDown)
